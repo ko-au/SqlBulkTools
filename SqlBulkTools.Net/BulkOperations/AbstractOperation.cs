@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using SqlBulkTools.Enumeration;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Reflection;
-using SqlBulkTools.Enumeration;
 
 namespace SqlBulkTools
 {
@@ -81,11 +81,11 @@ namespace SqlBulkTools
             if (propertyName == null)
                 throw new SqlBulkToolsException("SetIdentityColumn column name can't be null");
 
-            if (_identityColumn == null)           
+            if (_identityColumn == null)
                 _identityColumn = BulkOperationsHelper.GetActualColumn(_customColumnMappings, propertyName);
-                            
-            else           
-                throw new SqlBulkToolsException("Can't have more than one identity column");           
+
+            else
+                throw new SqlBulkToolsException("Can't have more than one identity column");
         }
 
         /// <summary>

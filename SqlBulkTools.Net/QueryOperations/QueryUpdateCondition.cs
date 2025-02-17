@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.Data.SqlClient;
 using SqlBulkTools.Enumeration;
 
 // ReSharper disable once CheckNamespace

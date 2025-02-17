@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using SqlBulkTools.Enumeration;
+using SqlBulkTools.Net.IntegrationTests.Data;
+using SqlBulkTools.Net.UnitTests;
+using SqlBulkTools.TestCommon.Model;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
-using SqlBulkTools.Enumeration;
-using SqlBulkTools.TestCommon.Model;
 using Xunit;
-using SqlBulkTools.Net.IntegrationTests.Data;
-using SqlBulkTools.Net.UnitTests;
 
 namespace SqlBulkTools.Net.IntegrationTests
 {

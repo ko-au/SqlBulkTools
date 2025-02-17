@@ -1,9 +1,9 @@
-﻿using SqlBulkTools.Enumeration;
+﻿using Microsoft.Data.SqlClient;
+using SqlBulkTools.Enumeration;
 using SqlBulkTools.Net.IntegrationTests.Data;
 using SqlBulkTools.Net.UnitTests;
 using SqlBulkTools.TestCommon.Model;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
 using Xunit;

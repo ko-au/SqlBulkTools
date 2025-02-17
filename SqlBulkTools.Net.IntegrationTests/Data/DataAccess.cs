@@ -1,5 +1,5 @@
-﻿using Crane.Interface;
-using Crane.SqlServer;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SqlBulkTools.TestCommon.Model;
 using System.Collections.Generic;
@@ -9,6 +9,11 @@ namespace SqlBulkTools.Net.IntegrationTests.Data
 {
     public class DataAccess
     {
+        public DataAccess()
+        {
+            SqlMapper.SetTypeMap(typeof(CustomColumnMappingTest), new ColumnAttributeTypeMapper<CustomColumnMappingTest>());
+        }
+
         private string _connectionString;
         public string ConnectionString
         {
@@ -27,96 +32,81 @@ namespace SqlBulkTools.Net.IntegrationTests.Data
 
         public List<Book> GetBookList(string isbn = null)
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
-
-            return dataAccess
-                .Query()
-                .AddSqlParameter("@Isbn", isbn)
-                .ExecuteReader<Book>("dbo.GetBooks")
+            using var connection = new SqlConnection(ConnectionString);
+            return connection
+                .Query<Book>("dbo.GetBooks", new { Isbn = isbn })
                 .ToList();
         }
 
         public int GetBookCount()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
-
-            return dataAccess
-                .Query()
-                .ExecuteScalar<int>("dbo.GetBookCount");
+            using var connection = new SqlConnection(ConnectionString);
+            return connection.QuerySingle<int>("dbo.GetBookCount");
         }
 
         public List<SchemaTest1> GetSchemaTest1List()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .AddSqlParameter("@Schema", "dbo")
-                .ExecuteReader<SchemaTest1>("dbo.GetSchemaTest")
+            return connection
+                .Query<SchemaTest1>("dbo.GetSchemaTest", new { Schema = "dbo" })
                 .ToList();
         }
 
         public List<SchemaTest2> GetSchemaTest2List()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .AddSqlParameter("@Schema", "AnotherSchema")
-                .ExecuteReader<SchemaTest2>("dbo.GetSchemaTest")
+            return connection
+                .Query<SchemaTest2>("dbo.GetSchemaTest", new { Schema = "AnotherSchema" })
                 .ToList();
         }
 
         public List<CustomColumnMappingTest> GetCustomColumnMappingTests()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .CustomColumnMapping<CustomColumnMappingTest>(x => x.NaturalIdTest, "NaturalId")
-                .CustomColumnMapping<CustomColumnMappingTest>(x => x.ColumnXIsDifferent, "ColumnX")
-                .CustomColumnMapping<CustomColumnMappingTest>(x => x.ColumnYIsDifferentInDatabase, "ColumnY")
-                .ExecuteReader<CustomColumnMappingTest>("dbo.GetCustomColumnMappingTests")
+            //.CustomColumnMapping<CustomColumnMappingTest>(x => x.NaturalIdTest, "NaturalId")
+            //.CustomColumnMapping<CustomColumnMappingTest>(x => x.ColumnXIsDifferent, "ColumnX")
+            //.CustomColumnMapping<CustomColumnMappingTest>(x => x.ColumnYIsDifferentInDatabase, "ColumnY")
+
+            var result = connection
+                .Query<CustomColumnMappingTest>("dbo.GetCustomColumnMappingTests", commandType: System.Data.CommandType.StoredProcedure)
                 .ToList();
+
+            return result;
         }
 
         public List<ReservedColumnNameTest> GetReservedColumnNameTests()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .ExecuteReader<ReservedColumnNameTest>("dbo.GetReservedColumnNameTests")
+            return connection
+                .Query<ReservedColumnNameTest>("dbo.GetReservedColumnNameTests")
                 .ToList();
         }
 
         public int GetComplexTypeModelCount()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .ExecuteScalar<int>("dbo.GetComplexModelCount");
+            return connection.QuerySingle<int>("dbo.GetComplexModelCount");
         }
 
         public void ReseedBookIdentity(int idStart)
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            dataAccess
-                .Command()
-                .AddSqlParameter("@IdStart", idStart)
-                .ExecuteNonQuery("dbo.ReseedBookIdentity");
+            connection
+                .Execute("dbo.ReseedBookIdentity", new { IdStart = idStart });
         }
 
         public List<CustomIdentityColumnNameTest> GetCustomIdentityColumnNameTestList()
         {
-            ICraneAccess dataAccess = new SqlServerAccess(ConnectionString);
+            using var connection = new SqlConnection(ConnectionString);
 
-            return dataAccess
-                .Query()
-                .CustomColumnMapping<CustomIdentityColumnNameTest>(x => x.Id, "ID_COMPANY")
-                .ExecuteReader<CustomIdentityColumnNameTest>("dbo.GetCustomIdentityColumnNameTestList")
+            return connection
+                .Query<CustomIdentityColumnNameTest>("dbo.GetCustomIdentityColumnNameTestList")
                 .ToList();
         }
     }
