@@ -1,0 +1,3 @@
+{
+  "connectionString": "Server=.;Database=SqlBulkTools;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=False"
+}

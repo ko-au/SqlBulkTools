@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>tiagorosendo, zek99, gtaylor44, ko-au</Authors>
+    <RepositoryUrl>https://github.com/ko-au/SqlBulkTools</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ko-au/SqlBulkTools</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ko-au/SqlBulkTools/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>SQL BULK BULKINSERT BULKUPDATE</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\net6.0\SqlBulkTools.Net.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\net6.0\SqlBulkTools.Net.xml</DocumentationFile>
+  </PropertyGroup>
+</Project>
