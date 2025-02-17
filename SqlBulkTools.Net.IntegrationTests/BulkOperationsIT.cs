@@ -2040,30 +2040,33 @@ namespace SqlBulkTools.Net.IntegrationTests
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Assert.Equal(232.43F, reader["FloatTest"]);
-                    Assert.Equal(43243.34, reader["FloatTest2"]);
-                    Assert.Equal(178.43M, reader["DecimalTest"]);
-                    Assert.Equal(24333.99M, reader["MoneyTest"]);
-                    Assert.Equal(103.32M, reader["SmallMoneyTest"]);
-                    Assert.Equal(32.53F, reader["RealTest"]);
-                    Assert.Equal(154343.3434342M, reader["NumericTest"]);
-                    Assert.Equal(todaysDate, reader["DateTimeTest"]);
-                    Assert.Equal(new DateTime(2008, 12, 12, 10, 20, 30), reader["DateTime2Test"]);
-                    Assert.Equal(new DateTime(2005, 7, 14), reader["SmallDateTimeTest"]);
-                    Assert.Equal(new DateOnly(2007, 7, 5), reader["DateTest"]);
-                    Assert.Equal(new TimeOnly(23, 32, 23), reader["TimeTest"]);
-                    Assert.Equal(guid, reader["GuidTest"]);
-                    Assert.Equal("This is some text.", reader["TextTest"]);
-                    Assert.Equal("Some", reader["CharTest"].ToString().Trim());
-                    Assert.Equal(126, (byte)reader["TinyIntTest"]);
-                    Assert.Equal(342324324324324324, reader["BigIntTest"]);
-                    Assert.Equal("<title>The best SQL Bulk tool</title>", reader["XmlTest"]);
-                    Assert.Equal("SomeText", reader["NCharTest"].ToString().Trim());
-                    Assert.Equal(new byte[] { 3, 3, 32, 4 }, (byte[])reader["ImageTest"]);
-                    Assert.Equal(new byte[] { 0, 3, 3, 2, 4, 3 }, (byte[])reader["BinaryTest"]);
-                    Assert.Equal(new byte[] { 3, 23, 33, 243 }, (byte[])reader["VarBinaryTest"]);
-                    Assert.NotNull(reader["TestSqlGeometry"]);
-                    Assert.NotNull(reader["TestSqlGeography"]);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.Equal(232.43F, reader["FloatTest"]);
+                        Assert.Equal(43243.34, reader["FloatTest2"]);
+                        Assert.Equal(178.43M, reader["DecimalTest"]);
+                        Assert.Equal(24333.99M, reader["MoneyTest"]);
+                        Assert.Equal(103.32M, reader["SmallMoneyTest"]);
+                        Assert.Equal(32.53F, reader["RealTest"]);
+                        Assert.Equal(154343.3434342M, reader["NumericTest"]);
+                        Assert.Equal(todaysDate, reader["DateTimeTest"]);
+                        Assert.Equal(new DateTime(2008, 12, 12, 10, 20, 30), reader["DateTime2Test"]);
+                        Assert.Equal(new DateTime(2005, 7, 14), reader["SmallDateTimeTest"]);
+                        Assert.Equal(new DateTime(2007, 7, 5), reader["DateTest"]);
+                        Assert.Equal(new TimeSpan(23, 32, 23), reader["TimeTest"]);
+                        Assert.Equal(guid, reader["GuidTest"]);
+                        Assert.Equal("This is some text.", reader["TextTest"]);
+                        Assert.Equal("Some", reader["CharTest"].ToString().Trim());
+                        Assert.Equal(126, (byte)reader["TinyIntTest"]);
+                        Assert.Equal(342324324324324324, reader["BigIntTest"]);
+                        Assert.Equal("<title>The best SQL Bulk tool</title>", reader["XmlTest"]);
+                        Assert.Equal("SomeText", reader["NCharTest"].ToString().Trim());
+                        Assert.Equal(new byte[] { 3, 3, 32, 4 }, (byte[])reader["ImageTest"]);
+                        Assert.Equal(new byte[] { 0, 3, 3, 2, 4, 3 }, (byte[])reader["BinaryTest"]);
+                        Assert.Equal(new byte[] { 3, 23, 33, 243 }, (byte[])reader["VarBinaryTest"]);
+                        Assert.NotNull(reader["TestSqlGeometry"]);
+                        Assert.NotNull(reader["TestSqlGeography"]);
+                    });
                 }
             }
         }

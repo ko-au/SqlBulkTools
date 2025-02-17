@@ -14,7 +14,6 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>tiagorosendo, zek99, gtaylor44, ko-au</Authors>
-    <VersionPrefix>3.0.0</VersionPrefix>
     <RepositoryUrl>https://github.com/ko-au/SqlBulkTools</RepositoryUrl>
     <PackageProjectUrl>https://github.com/ko-au/SqlBulkTools</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/ko-au/SqlBulkTools/blob/master/LICENSE</PackageLicenseUrl>
